@@ -1,12 +1,703 @@
 # source: https://eu1.prisma.sh/risha-sringa-changmai-0e29ee/music/dev
-# timestamp: Wed Sep 19 2018 13:02:24 GMT+0530 (IST)
+# timestamp: Wed Sep 19 2018 13:26:06 GMT+0530 (IST)
+
+type AggregateAlbum {
+  count: Int!
+}
+
+type AggregateArtist {
+  count: Int!
+}
 
 type AggregatePost {
   count: Int!
 }
 
+type AggregateSong {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
+}
+
+type Album implements Node {
+  id: ID!
+  name: String!
+  date: String!
+  genre: String
+  albumPiC: String
+  artist(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist!]
+}
+
+"""A connection to a list of items."""
+type AlbumConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AlbumEdge]!
+  aggregate: AggregateAlbum!
+}
+
+input AlbumCreateInput {
+  name: String!
+  date: String!
+  genre: String
+  albumPiC: String
+  artist: ArtistCreateManyWithoutAlbumsInput
+}
+
+input AlbumCreateManyWithoutArtistInput {
+  create: [AlbumCreateWithoutArtistInput!]
+  connect: [AlbumWhereUniqueInput!]
+}
+
+input AlbumCreateWithoutArtistInput {
+  name: String!
+  date: String!
+  genre: String
+  albumPiC: String
+}
+
+"""An edge in a connection."""
+type AlbumEdge {
+  """The item at the end of the edge."""
+  node: Album!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum AlbumOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  date_ASC
+  date_DESC
+  genre_ASC
+  genre_DESC
+  albumPiC_ASC
+  albumPiC_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type AlbumPreviousValues {
+  id: ID!
+  name: String!
+  date: String!
+  genre: String
+  albumPiC: String
+}
+
+type AlbumSubscriptionPayload {
+  mutation: MutationType!
+  node: Album
+  updatedFields: [String!]
+  previousValues: AlbumPreviousValues
+}
+
+input AlbumSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AlbumSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AlbumSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AlbumSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: AlbumWhereInput
+}
+
+input AlbumUpdateInput {
+  name: String
+  date: String
+  genre: String
+  albumPiC: String
+  artist: ArtistUpdateManyWithoutAlbumsInput
+}
+
+input AlbumUpdateManyWithoutArtistInput {
+  create: [AlbumCreateWithoutArtistInput!]
+  connect: [AlbumWhereUniqueInput!]
+  disconnect: [AlbumWhereUniqueInput!]
+  delete: [AlbumWhereUniqueInput!]
+  update: [AlbumUpdateWithWhereUniqueWithoutArtistInput!]
+  upsert: [AlbumUpsertWithWhereUniqueWithoutArtistInput!]
+}
+
+input AlbumUpdateWithoutArtistDataInput {
+  name: String
+  date: String
+  genre: String
+  albumPiC: String
+}
+
+input AlbumUpdateWithWhereUniqueWithoutArtistInput {
+  where: AlbumWhereUniqueInput!
+  data: AlbumUpdateWithoutArtistDataInput!
+}
+
+input AlbumUpsertWithWhereUniqueWithoutArtistInput {
+  where: AlbumWhereUniqueInput!
+  update: AlbumUpdateWithoutArtistDataInput!
+  create: AlbumCreateWithoutArtistInput!
+}
+
+input AlbumWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AlbumWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AlbumWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AlbumWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  date: String
+
+  """All values that are not equal to given value."""
+  date_not: String
+
+  """All values that are contained in given list."""
+  date_in: [String!]
+
+  """All values that are not contained in given list."""
+  date_not_in: [String!]
+
+  """All values less than the given value."""
+  date_lt: String
+
+  """All values less than or equal the given value."""
+  date_lte: String
+
+  """All values greater than the given value."""
+  date_gt: String
+
+  """All values greater than or equal the given value."""
+  date_gte: String
+
+  """All values containing the given string."""
+  date_contains: String
+
+  """All values not containing the given string."""
+  date_not_contains: String
+
+  """All values starting with the given string."""
+  date_starts_with: String
+
+  """All values not starting with the given string."""
+  date_not_starts_with: String
+
+  """All values ending with the given string."""
+  date_ends_with: String
+
+  """All values not ending with the given string."""
+  date_not_ends_with: String
+  genre: String
+
+  """All values that are not equal to given value."""
+  genre_not: String
+
+  """All values that are contained in given list."""
+  genre_in: [String!]
+
+  """All values that are not contained in given list."""
+  genre_not_in: [String!]
+
+  """All values less than the given value."""
+  genre_lt: String
+
+  """All values less than or equal the given value."""
+  genre_lte: String
+
+  """All values greater than the given value."""
+  genre_gt: String
+
+  """All values greater than or equal the given value."""
+  genre_gte: String
+
+  """All values containing the given string."""
+  genre_contains: String
+
+  """All values not containing the given string."""
+  genre_not_contains: String
+
+  """All values starting with the given string."""
+  genre_starts_with: String
+
+  """All values not starting with the given string."""
+  genre_not_starts_with: String
+
+  """All values ending with the given string."""
+  genre_ends_with: String
+
+  """All values not ending with the given string."""
+  genre_not_ends_with: String
+  albumPiC: String
+
+  """All values that are not equal to given value."""
+  albumPiC_not: String
+
+  """All values that are contained in given list."""
+  albumPiC_in: [String!]
+
+  """All values that are not contained in given list."""
+  albumPiC_not_in: [String!]
+
+  """All values less than the given value."""
+  albumPiC_lt: String
+
+  """All values less than or equal the given value."""
+  albumPiC_lte: String
+
+  """All values greater than the given value."""
+  albumPiC_gt: String
+
+  """All values greater than or equal the given value."""
+  albumPiC_gte: String
+
+  """All values containing the given string."""
+  albumPiC_contains: String
+
+  """All values not containing the given string."""
+  albumPiC_not_contains: String
+
+  """All values starting with the given string."""
+  albumPiC_starts_with: String
+
+  """All values not starting with the given string."""
+  albumPiC_not_starts_with: String
+
+  """All values ending with the given string."""
+  albumPiC_ends_with: String
+
+  """All values not ending with the given string."""
+  albumPiC_not_ends_with: String
+  artist_every: ArtistWhereInput
+  artist_some: ArtistWhereInput
+  artist_none: ArtistWhereInput
+}
+
+input AlbumWhereUniqueInput {
+  id: ID
+}
+
+type Artist implements Node {
+  id: ID!
+  name: String!
+  pic: String
+  albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album!]
+  song(where: SongWhereInput, orderBy: SongOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Song!]
+}
+
+"""A connection to a list of items."""
+type ArtistConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ArtistEdge]!
+  aggregate: AggregateArtist!
+}
+
+input ArtistCreateInput {
+  name: String!
+  pic: String
+  albums: AlbumCreateManyWithoutArtistInput
+  song: SongCreateManyWithoutArtistInput
+}
+
+input ArtistCreateManyWithoutAlbumsInput {
+  create: [ArtistCreateWithoutAlbumsInput!]
+  connect: [ArtistWhereUniqueInput!]
+}
+
+input ArtistCreateManyWithoutSongInput {
+  create: [ArtistCreateWithoutSongInput!]
+  connect: [ArtistWhereUniqueInput!]
+}
+
+input ArtistCreateWithoutAlbumsInput {
+  name: String!
+  pic: String
+  song: SongCreateManyWithoutArtistInput
+}
+
+input ArtistCreateWithoutSongInput {
+  name: String!
+  pic: String
+  albums: AlbumCreateManyWithoutArtistInput
+}
+
+"""An edge in a connection."""
+type ArtistEdge {
+  """The item at the end of the edge."""
+  node: Artist!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ArtistOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  pic_ASC
+  pic_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ArtistPreviousValues {
+  id: ID!
+  name: String!
+  pic: String
+}
+
+type ArtistSubscriptionPayload {
+  mutation: MutationType!
+  node: Artist
+  updatedFields: [String!]
+  previousValues: ArtistPreviousValues
+}
+
+input ArtistSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ArtistSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ArtistSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ArtistSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ArtistWhereInput
+}
+
+input ArtistUpdateInput {
+  name: String
+  pic: String
+  albums: AlbumUpdateManyWithoutArtistInput
+  song: SongUpdateManyWithoutArtistInput
+}
+
+input ArtistUpdateManyWithoutAlbumsInput {
+  create: [ArtistCreateWithoutAlbumsInput!]
+  connect: [ArtistWhereUniqueInput!]
+  disconnect: [ArtistWhereUniqueInput!]
+  delete: [ArtistWhereUniqueInput!]
+  update: [ArtistUpdateWithWhereUniqueWithoutAlbumsInput!]
+  upsert: [ArtistUpsertWithWhereUniqueWithoutAlbumsInput!]
+}
+
+input ArtistUpdateManyWithoutSongInput {
+  create: [ArtistCreateWithoutSongInput!]
+  connect: [ArtistWhereUniqueInput!]
+  disconnect: [ArtistWhereUniqueInput!]
+  delete: [ArtistWhereUniqueInput!]
+  update: [ArtistUpdateWithWhereUniqueWithoutSongInput!]
+  upsert: [ArtistUpsertWithWhereUniqueWithoutSongInput!]
+}
+
+input ArtistUpdateWithoutAlbumsDataInput {
+  name: String
+  pic: String
+  song: SongUpdateManyWithoutArtistInput
+}
+
+input ArtistUpdateWithoutSongDataInput {
+  name: String
+  pic: String
+  albums: AlbumUpdateManyWithoutArtistInput
+}
+
+input ArtistUpdateWithWhereUniqueWithoutAlbumsInput {
+  where: ArtistWhereUniqueInput!
+  data: ArtistUpdateWithoutAlbumsDataInput!
+}
+
+input ArtistUpdateWithWhereUniqueWithoutSongInput {
+  where: ArtistWhereUniqueInput!
+  data: ArtistUpdateWithoutSongDataInput!
+}
+
+input ArtistUpsertWithWhereUniqueWithoutAlbumsInput {
+  where: ArtistWhereUniqueInput!
+  update: ArtistUpdateWithoutAlbumsDataInput!
+  create: ArtistCreateWithoutAlbumsInput!
+}
+
+input ArtistUpsertWithWhereUniqueWithoutSongInput {
+  where: ArtistWhereUniqueInput!
+  update: ArtistUpdateWithoutSongDataInput!
+  create: ArtistCreateWithoutSongInput!
+}
+
+input ArtistWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ArtistWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ArtistWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ArtistWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  pic: String
+
+  """All values that are not equal to given value."""
+  pic_not: String
+
+  """All values that are contained in given list."""
+  pic_in: [String!]
+
+  """All values that are not contained in given list."""
+  pic_not_in: [String!]
+
+  """All values less than the given value."""
+  pic_lt: String
+
+  """All values less than or equal the given value."""
+  pic_lte: String
+
+  """All values greater than the given value."""
+  pic_gt: String
+
+  """All values greater than or equal the given value."""
+  pic_gte: String
+
+  """All values containing the given string."""
+  pic_contains: String
+
+  """All values not containing the given string."""
+  pic_not_contains: String
+
+  """All values starting with the given string."""
+  pic_starts_with: String
+
+  """All values not starting with the given string."""
+  pic_not_starts_with: String
+
+  """All values ending with the given string."""
+  pic_ends_with: String
+
+  """All values not ending with the given string."""
+  pic_not_ends_with: String
+  albums_every: AlbumWhereInput
+  albums_some: AlbumWhereInput
+  albums_none: AlbumWhereInput
+  song_every: SongWhereInput
+  song_some: SongWhereInput
+  song_none: SongWhereInput
+}
+
+input ArtistWhereUniqueInput {
+  id: ID
 }
 
 type BatchPayload {
@@ -25,16 +716,34 @@ scalar Long
 type Mutation {
   createPost(data: PostCreateInput!): Post!
   createUser(data: UserCreateInput!): User!
+  createArtist(data: ArtistCreateInput!): Artist!
+  createAlbum(data: AlbumCreateInput!): Album!
+  createSong(data: SongCreateInput!): Song!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateArtist(data: ArtistUpdateInput!, where: ArtistWhereUniqueInput!): Artist
+  updateAlbum(data: AlbumUpdateInput!, where: AlbumWhereUniqueInput!): Album
+  updateSong(data: SongUpdateInput!, where: SongWhereUniqueInput!): Song
   deletePost(where: PostWhereUniqueInput!): Post
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteArtist(where: ArtistWhereUniqueInput!): Artist
+  deleteAlbum(where: AlbumWhereUniqueInput!): Album
+  deleteSong(where: SongWhereUniqueInput!): Song
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertArtist(where: ArtistWhereUniqueInput!, create: ArtistCreateInput!, update: ArtistUpdateInput!): Artist!
+  upsertAlbum(where: AlbumWhereUniqueInput!, create: AlbumCreateInput!, update: AlbumUpdateInput!): Album!
+  upsertSong(where: SongWhereUniqueInput!, create: SongCreateInput!, update: SongUpdateInput!): Song!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyArtists(data: ArtistUpdateInput!, where: ArtistWhereInput): BatchPayload!
+  updateManyAlbums(data: AlbumUpdateInput!, where: AlbumWhereInput): BatchPayload!
+  updateManySongs(data: SongUpdateInput!, where: SongWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyArtists(where: ArtistWhereInput): BatchPayload!
+  deleteManyAlbums(where: AlbumWhereInput): BatchPayload!
+  deleteManySongs(where: SongWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -394,10 +1103,19 @@ input PostWhereUniqueInput {
 type Query {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist]!
+  albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album]!
+  songs(where: SongWhereInput, orderBy: SongOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Song]!
   post(where: PostWhereUniqueInput!): Post
   user(where: UserWhereUniqueInput!): User
+  artist(where: ArtistWhereUniqueInput!): Artist
+  album(where: AlbumWhereUniqueInput!): Album
+  song(where: SongWhereUniqueInput!): Song
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  artistsConnection(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArtistConnection!
+  albumsConnection(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AlbumConnection!
+  songsConnection(where: SongWhereInput, orderBy: SongOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SongConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -406,9 +1124,329 @@ type Query {
   ): Node
 }
 
+type Song implements Node {
+  id: ID!
+  name: String!
+  length: String
+  songPic: String
+  artist(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist!]
+}
+
+"""A connection to a list of items."""
+type SongConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SongEdge]!
+  aggregate: AggregateSong!
+}
+
+input SongCreateInput {
+  name: String!
+  length: String
+  songPic: String
+  artist: ArtistCreateManyWithoutSongInput
+}
+
+input SongCreateManyWithoutArtistInput {
+  create: [SongCreateWithoutArtistInput!]
+  connect: [SongWhereUniqueInput!]
+}
+
+input SongCreateWithoutArtistInput {
+  name: String!
+  length: String
+  songPic: String
+}
+
+"""An edge in a connection."""
+type SongEdge {
+  """The item at the end of the edge."""
+  node: Song!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SongOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  length_ASC
+  length_DESC
+  songPic_ASC
+  songPic_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type SongPreviousValues {
+  id: ID!
+  name: String!
+  length: String
+  songPic: String
+}
+
+type SongSubscriptionPayload {
+  mutation: MutationType!
+  node: Song
+  updatedFields: [String!]
+  previousValues: SongPreviousValues
+}
+
+input SongSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SongSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SongSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SongSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SongWhereInput
+}
+
+input SongUpdateInput {
+  name: String
+  length: String
+  songPic: String
+  artist: ArtistUpdateManyWithoutSongInput
+}
+
+input SongUpdateManyWithoutArtistInput {
+  create: [SongCreateWithoutArtistInput!]
+  connect: [SongWhereUniqueInput!]
+  disconnect: [SongWhereUniqueInput!]
+  delete: [SongWhereUniqueInput!]
+  update: [SongUpdateWithWhereUniqueWithoutArtistInput!]
+  upsert: [SongUpsertWithWhereUniqueWithoutArtistInput!]
+}
+
+input SongUpdateWithoutArtistDataInput {
+  name: String
+  length: String
+  songPic: String
+}
+
+input SongUpdateWithWhereUniqueWithoutArtistInput {
+  where: SongWhereUniqueInput!
+  data: SongUpdateWithoutArtistDataInput!
+}
+
+input SongUpsertWithWhereUniqueWithoutArtistInput {
+  where: SongWhereUniqueInput!
+  update: SongUpdateWithoutArtistDataInput!
+  create: SongCreateWithoutArtistInput!
+}
+
+input SongWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SongWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SongWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SongWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  length: String
+
+  """All values that are not equal to given value."""
+  length_not: String
+
+  """All values that are contained in given list."""
+  length_in: [String!]
+
+  """All values that are not contained in given list."""
+  length_not_in: [String!]
+
+  """All values less than the given value."""
+  length_lt: String
+
+  """All values less than or equal the given value."""
+  length_lte: String
+
+  """All values greater than the given value."""
+  length_gt: String
+
+  """All values greater than or equal the given value."""
+  length_gte: String
+
+  """All values containing the given string."""
+  length_contains: String
+
+  """All values not containing the given string."""
+  length_not_contains: String
+
+  """All values starting with the given string."""
+  length_starts_with: String
+
+  """All values not starting with the given string."""
+  length_not_starts_with: String
+
+  """All values ending with the given string."""
+  length_ends_with: String
+
+  """All values not ending with the given string."""
+  length_not_ends_with: String
+  songPic: String
+
+  """All values that are not equal to given value."""
+  songPic_not: String
+
+  """All values that are contained in given list."""
+  songPic_in: [String!]
+
+  """All values that are not contained in given list."""
+  songPic_not_in: [String!]
+
+  """All values less than the given value."""
+  songPic_lt: String
+
+  """All values less than or equal the given value."""
+  songPic_lte: String
+
+  """All values greater than the given value."""
+  songPic_gt: String
+
+  """All values greater than or equal the given value."""
+  songPic_gte: String
+
+  """All values containing the given string."""
+  songPic_contains: String
+
+  """All values not containing the given string."""
+  songPic_not_contains: String
+
+  """All values starting with the given string."""
+  songPic_starts_with: String
+
+  """All values not starting with the given string."""
+  songPic_not_starts_with: String
+
+  """All values ending with the given string."""
+  songPic_ends_with: String
+
+  """All values not ending with the given string."""
+  songPic_not_ends_with: String
+  artist_every: ArtistWhereInput
+  artist_some: ArtistWhereInput
+  artist_none: ArtistWhereInput
+}
+
+input SongWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  artist(where: ArtistSubscriptionWhereInput): ArtistSubscriptionPayload
+  album(where: AlbumSubscriptionWhereInput): AlbumSubscriptionPayload
+  song(where: SongSubscriptionWhereInput): SongSubscriptionPayload
 }
 
 type User implements Node {

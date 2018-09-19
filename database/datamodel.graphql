@@ -15,3 +15,28 @@ type User {
   name: String!
   posts: [Post!]!
 }
+
+type Artist {
+  id: ID! @unique
+  name: String!
+  pic: String
+  albums: [Album!]!
+  song: [Song!]!
+}
+
+type Album {
+  id: ID! @unique
+  name: String!
+  date: String!
+  genre: String
+  albumPiC: String
+  artist: [Artist!]!
+}
+
+type Song {
+  id: ID! @unique
+  name: String!
+  length: String
+  songPic: String
+  artist: [Artist!]!
+}

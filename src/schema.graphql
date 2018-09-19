@@ -5,6 +5,7 @@ type Query {
   drafts: [Post!]!
   post(id: ID!): Post
   me: User
+  allArtist: [Artist!]!
 }
 
 type Mutation {
@@ -29,4 +30,29 @@ type User {
   email: String!
   name: String!
   posts: [Post!]!
+}
+
+type Artist {
+  id: ID! 
+  name: String!
+  pic: String
+  albums: [Album!]!
+  song: [Song!]!
+}
+
+type Album {
+  id: ID! 
+  name: String!
+  date: String!
+  genre: String
+  albumPiC: String
+  artist: [Artist!]!
+}
+
+type Song {
+  id: ID!
+  name: String!
+  length: String
+  songPic: String
+  artist: [Artist!]!
 }
